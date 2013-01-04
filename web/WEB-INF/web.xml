@@ -18,7 +18,7 @@
     <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
   </listener>
   <listener>
-    <listener-class>com.ips.core.psfp.support.web.listener.LoggerContextListener</listener-class>
+    <listener-class>com.cr.support.web.listener.LoggerContextListener</listener-class>
   </listener>
   <servlet>
     <servlet-name>dispatcher</servlet-name>
@@ -59,7 +59,7 @@
   </filter-mapping>
   <filter>
     <filter-name>loggingFilter</filter-name>
-    <filter-class>com.ips.core.psfp.support.web.filter.LoggingProcessFilter</filter-class>
+    <filter-class>com.cr.support.web.filter.LoggingProcessFilter</filter-class>
   </filter>
   <filter-mapping>
     <filter-name>loggingFilter</filter-name>
