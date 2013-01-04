@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+	<property name="pattern" 
+        value="%d{yyyyMMdd:HH:mm:ss.SSS} [%X{traceNo}] [%class.%method] %-5level  %msg%n" />
+   <property name="USER_HOME" value="c:/psfp_log" />
+	
+	<appender name="ROOT_CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+		<layout name="StandardFormat" class="ch.qos.logback.classic.PatternLayout">
+			<pattern>${pattern}</pattern>
+		</layout>
+	</appender>
+	
+	<appender name="EX_BUSI_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${USER_HOME}/business_exception.txt</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${USER_HOME}/%d{yyyyMMdd}/business_exception.txt.%i</fileNamePattern>
+			<timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+				<maxFileSize>5MB</maxFileSize>
+			</timeBasedFileNamingAndTriggeringPolicy>
+			<maxHistory>10</maxHistory> 
+		</rollingPolicy>
+		<layout>
+			<pattern>${pattern}</pattern>
+		</layout>
+	</appender>
+	
+	<appender name="EX_SYS_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${USER_HOME}/system_exception.txt</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${USER_HOME}/%d{yyyyMMdd}/system_exception.txt.%i</fileNamePattern>
+			<timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+				<maxFileSize>5MB</maxFileSize>
+			</timeBasedFileNamingAndTriggeringPolicy>
+			<maxHistory>10</maxHistory> 
+		</rollingPolicy>
+		<layout>
+			<pattern>${pattern}</pattern>
+		</layout>
+	</appender>
+	
+	<appender name="EX_DEFAULT_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${USER_HOME}/default_exception.txt</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${USER_HOME}/%d{yyyyMMdd}/default_exception.txt.%i</fileNamePattern>
+			<timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+				<maxFileSize>5MB</maxFileSize>
+			</timeBasedFileNamingAndTriggeringPolicy>
+			<maxHistory>10</maxHistory> 
+		</rollingPolicy>
+		<layout>
+			<pattern>${pattern}</pattern>
+		</layout>
+	</appender>
+
+	<logger name="com.ips.core.psfp" level="debug" additivity="false">
+	 	<appender-ref ref="ROOT_CONSOLE"/>
+	</logger>
+	
+	<logger name="org.springframework.transaction" level="trace" additivity="false">
+		<appender-ref ref="ROOT_CONSOLE"/>
+	</logger>
+	
+	<!-- 定义异常节点 -->
+	
+	<logger name="businessException" level="error" additivity="false">
+		<appender-ref ref="ROOT_CONSOLE"/>
+		<appender-ref ref="EX_BUSI_FILE"/>
+	</logger>
+	
+	<logger name="systemException" level="error" additivity="false">
+		<appender-ref ref="ROOT_CONSOLE"/>
+		<appender-ref ref="EX_SYS_FILE"/>
+	</logger>
+	
+	<logger name="defaultException" level="error" additivity="false">
+		<appender-ref ref="ROOT_CONSOLE"/>
+		<appender-ref ref="EX_DEFAULT_FILE"/>
+	</logger>
+	
+	<!-- MQ -->
+	<logger name="org.apache.activemq.transport" level="info" additivity="false">
+		<appender-ref ref="ROOT_CONSOLE"/>
+	</logger>
+	<root level="debug">
+		<appender-ref ref="ROOT_CONSOLE"/>
+	</root>
+</configuration>

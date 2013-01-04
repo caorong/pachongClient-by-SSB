@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:jdbc="http://www.springframework.org/schema/jdbc"  xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:jee="http://www.springframework.org/schema/jee" xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd 
+		http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
+
+
+	<description>数据源及事务配置</description>
+
+	<!-- ************************************************************************************************* -->
+	<!-- *                                        MyBatis 配置                                                                                      			 * -->
+	<!-- ************************************************************************************************* -->
+	<!-- 配置sqlSessionFactory -->
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<!-- 代理数据源 -->
+		<property name="dataSource" ref="proxyDataSource" />
+		<!-- 指定Mapper文件位置 -->
+		<property name="mapperLocations" value="classpath*:mybatis/sqlMap/*Mapper.xml" />
+		<!-- 制定mybatis住配置位置 -->
+		<property name="configLocation" value="classpath:mybatis/mybatis-config.xml"/>
+	</bean>
+	
+	<!-- 扫描basePackage下所有以@MyBatisRepository标识的 接口或继承MyBatisRepository的接口-->
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="basePackage" value="com.cr" />
+		<!-- 扫描annotation -->
+		<property name="annotationClass" value="com.cr.support.repository.mybatis._annotation.MyBatisRepository"/>
+		<!-- 扫描接口 -->
+		<property name="markerInterface" value="com.cr.support.repository.mybatis._interface.MyBatisRepository"/>
+	</bean>
+	
+	
+	<!-- ************************************************************************************************* -->
+	<!-- *                                        事务配置                                                                                               			 * -->
+	<!-- ************************************************************************************************* -->
+	<!-- jta -->
+	<!-- 
+	<bean id="jtaTxManager" class="org.springframework.transaction.jta.JtaTransactionManager">
+		<property name="userTransactionName" value="java:comp/UserTransaction"/>
+	</bean>
+	
+	
+	<bean id="jtaTxTemplate" class="org.springframework.transaction.support.TransactionTemplate" >
+		<property name="transactionManager">
+			<ref bean="jtaTxManager"/>
+		</property>
+		<property name="propagationBehaviorName" value="PROPAGATION_REQUIRED"/>
+		<property name="isolationLevelName" value="ISOLATION_DEFAULT"/>
+		<property name="readOnly" value="false"/>
+		<property name="timeout" value="120"/>
+	</bean>
+	-->
+	 
+	<!-- local -->
+	<bean id="txManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="proxyDataSource" />
+	</bean>
+	
+	<bean id="txTemplate" class="org.springframework.transaction.support.TransactionTemplate" >
+		<property name="transactionManager">
+			<ref bean="txManager"/>
+		</property>
+		<property name="propagationBehaviorName" value="PROPAGATION_REQUIRED"/>
+		<property name="isolationLevelName" value="ISOLATION_DEFAULT"/>
+		<property name="readOnly" value="false"/>
+		<property name="timeout" value="120"/>
+	</bean>
+	
+	<!-- 使用annotation标注事务 -->
+	<tx:annotation-driven transaction-manager="txManager" proxy-target-class="true" />
+	
+	<!-- ************************************************************************************************* -->
+	<!-- *                                        数据源配置                                                                                            			 * -->
+	<!-- ************************************************************************************************* -->	
+	<!-- 代理datasource，使其能够显式获取preparedStatement的参数值 -->
+	<bean id="proxyDataSource" class="org.jdbcdslog.ConnectionPoolDataSourceProxy">
+		<property name="targetDSDirect" ref="dataSource"/>
+	</bean>
+	
+	<!-- 数据源配置-DBCP数据库连接池 -->
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
+		destroy-method="close">
+		<!-- Connection Info -->
+		<property name="driverClassName" value="${jdbc.driver}" />
+		<property name="url" value="${jdbc.url}" />
+		<property name="username" value="${jdbc.username}" />
+		<property name="password" value="${jdbc.password}" />
+
+		<!-- Connection Pooling Info -->
+		<property name="maxActive" value="${dbcp.maxActive}" />
+		<property name="maxIdle" value="${dbcp.maxIdle}" />
+		<property name="defaultAutoCommit" value="false" />
+		<!-- 连接Idle一个小时后超时 -->
+		<property name="timeBetweenEvictionRunsMillis" value="3600000" />
+		<property name="minEvictableIdleTimeMillis" value="3600000" />
+	</bean>
+
+	<!-- 数据源配置,使用应用服务器的数据库连接池 -->
+	<!--<jee:jndi-lookup id="dataSource" jndi-name="java:comp/env/jdbc/ExampleDB"/> -->
+</beans>

@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<!-- 指定到Dao类 -->    
+<mapper namespace="com.cr.modules.sample.dao.SampleDao">
+
+	<!-- 注id为指定到Dao类中的方法名 -->
+	
+	<!-- 插入记录 -->
+	<insert id="insert" parameterType="com.cr.modules.sample.model.SampleReg">
+		<![CDATA[
+			INSERT INTO SAMPLE_REG(ID, NAME, AGE, GENDER, BIRTHDAY, CELLPHONE) 
+			VALUES(#{id}, #{name}, #{age}, #{gender}, #{birthday}, #{cellphone})
+		]]>
+	</insert>
+	
+	
+	<resultMap id="sampleRegMap" type="com.cr.modules.sample.model.SampleReg">
+		<id column="ID" property="id"/>
+		<result column="NAME" property="name"/>
+		<result column="AGE" property="age"/>
+		<result column="GENDER" property="gender"/>
+		<result column="BIRTHDAY" property="birthday"/>
+		<result column="CELLPHONE" property="cellphone"/>
+	</resultMap>
+	
+	<!-- 查询所有记录 -->
+	<select id="queryAll" resultMap="sampleRegMap">
+		<![CDATA[
+			SELECT * FROM SAMPLE_REG
+		]]>
+	</select>
+	
+	<!-- 查询指定记录 -->
+	<select id="query" parameterType="com.cr.modules.sample.model.SampleReg" resultMap="sampleRegMap">
+		
+			SELECT * FROM SAMPLE_REG 
+			<trim prefix="WHERE" prefixOverrides="AND" >
+				<if test="name!=null">
+					NAME=#{name}
+				</if>
+				<if test="age!=null">
+					AND AGE=#{age}
+				</if>
+				<if test="gender!=null">
+					AND GENDER=#{gender}
+				</if>
+				<if test="birthday!=null">
+					AND BIRTHDAY=#{birthday}
+				</if>
+				<if test="cellphone!=null">
+					AND CELLPHONE=#{cellphone}
+				</if>
+			</trim> 
+<![CDATA[
+		]]>
+	</select>
+	
+	<!-- 更新记录 -->
+	<update id="update" parameterType="com.cr.modules.sample.model.SampleReg">
+		<![CDATA[
+				UPDATE SAMPLE_REG 
+				SET 
+					NAME=#{name},
+					AGE=#{age}, 
+					GENDER=#{gender}, 
+					BIRTHDAY=#{birthday}, 
+					CELLPHONE=#{cellphone} 
+				WHERE ID=#{id}
+		]]>
+	</update>
+	
+	<!-- 删除记录 -->
+	<delete id="delete" parameterType="string">
+		<![CDATA[
+			DELETE FROM SAMPLE_REG WHERE ID=#{id}
+		]]>
+	</delete>
+</mapper>

@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+	 http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+	<description>SpringMVC公共配置</description>
+
+	<context:annotation-config />
+
+	<bean
+		class="org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor" />
+	<!-- 视图解析器 -->
+	<bean id="viewResolver"
+		class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">
+		<property name="mediaTypes">
+			<map>
+				<entry key="html" value="text/html" />
+				<entry key="json" value="application/json" />
+				<entry key="img" value="image/jpeg" />
+			</map>
+		</property>
+		<property name="viewResolvers">
+			<list>
+				<bean
+					class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+					<property name="prefix" value="/WEB-INF/views/" />
+					<property name="suffix" value=".jsp" />
+				</bean>
+			</list>
+		</property>
+		<property name="defaultViews">
+			<list>
+				<bean
+					class="org.springframework.web.servlet.view.json.MappingJacksonJsonView" />
+				<bean class="com.cr.support.web.viewext.ImageView" />
+			</list>
+		</property>
+	</bean>
+
+	<!-- json对象转换器 -->
+	<bean id="jsonConvert"
+		class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter" />
+
+	<!-- 文件上传解析器 -->
+	<bean id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<property name="maxUploadSize" value="20480000" /><!-- 限制20MB -->
+	</bean>
+
+
+
+	<!-- 异常解析器 -->
+	<bean id="exceptionResolver"
+		class="com.cr.support.web.resolver.CustomMappingExceptionResolver">
+		<!-- 条件 -->
+		<property name="predicates">
+			<list>
+				<bean
+					class="com.cr.support.exception.logger.predicate.PSFPBusinessExceptionLoggerPredicate" />
+				<bean
+					class="com.cr.support.exception.logger.predicate.PSFPSystemExceptionLoggerPredicate" />
+
+			</list>
+		</property>
+		<!-- 执行闭包(与条件顺序一一对应) -->
+		<property name="closures">
+			<list>
+				<bean
+					class="com.cr.support.exception.logger.closure.PSFPBusinessExceptionLoggerClosure" />
+				<bean
+					class="com.cr.support.exception.logger.closure.PSFPSystemExceptionLoggerClosure" />
+			</list>
+		</property>
+		<!-- 默认执行闭包 -->
+		<property name="defaultClosure">
+			<bean
+				class="com.cr.support.exception.logger.closure.PSFPDefaultExceptionLoggerClosure" />
+		</property>
+		<property name="exceptionMappings">
+			<props>
+				<!-- 可定义多个类型异常并分类 -->
+				<prop
+					key="com.cr.support.exception.PSFPRuntimeBusinessException">errors/psfpBusinessError</prop>
+				<prop key="com.cr.support.exception.PSFPBusinessException">errors/psfpBusinessError</prop>
+				<prop
+					key="com.cr.support.exception.PSFPRuntimeSystemException">errors/errors/psfpSystemError</prop>
+				<prop key="com.cr.support.exception.PSFPSystemException">errors/psfpSystemError</prop>
+				<prop key="org.springframework.dao.DataIntegrityViolationException">errors/dataAccessError</prop>
+			</props>
+		</property>
+		<property name="defaultErrorView" value="errors/default" />
+	</bean>
+</beans>
