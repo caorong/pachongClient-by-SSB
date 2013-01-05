@@ -134,13 +134,14 @@ public class UserRelationshipController extends BaseController {
 			if (u1 != null) {
 				// 检测db里是否有这个User对象，有的话直接从db中获取
 				if(userService.queryCountByUid(u1.getId()) != 0){
-					//db中存在，从db获取
-					UserBean userlv1 = userService.querySingleUserByUid(u1.getId()); 
+					//db中存在，从db获取啥
+//					UserBean userlv1 = userService.querySingleUserByUid(u1.getId()); 
 				} else {
 					//db中不存在，将找到的人存进db
 					this.insertUserToDb(u1);
 				}
 				//计算坐标
+				
 				
 				
 				//创建并插入path队列	
