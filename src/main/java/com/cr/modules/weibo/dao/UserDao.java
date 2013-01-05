@@ -30,11 +30,4 @@ public interface UserDao {
 	 */	
 	public UserBean querySingleUserByUid(String uid);
 	
-	/**
-	 * @Description 更新User实例 一般是加type属性
-	 * @param userBean
-	 * @return  
-	 * @author caorong
-	 */	
-	public void updateSingleUser(UserBean userBean);
 }
