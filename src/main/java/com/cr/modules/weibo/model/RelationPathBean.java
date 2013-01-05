@@ -18,8 +18,10 @@ public class RelationPathBean implements Serializable {
 	// 用于给数据库表示
 	private String Centeruid;
 	private String uid;
-	private String x;
-	private String y;
+	private String xstart;
+	private String ystart;
+	private String xend;
+	private String yend;
 	private String name;
 
 	public RelationPathBean() {
@@ -29,16 +31,20 @@ public class RelationPathBean implements Serializable {
 	/**
 	 * @param CenterUid
 	 * @param uid
-	 * @param x
-	 * @param y
+	 * @param xs
+	 * @param ys
+	 * @param xe
+	 * @param ye
 	 * @param name
 	 * */
 	public RelationPathBean(String centeruid, String uid, String x, String y,
-			String name) {
+			String ex, String ey, String name) {
 		this.Centeruid = centeruid;
 		this.uid = uid;
-		this.x = x;
-		this.y = y;
+		this.xstart = x;
+		this.ystart = y;
+		this.xend = ex;
+		this.yend = ey;
 		this.name = name;
 	}
 
@@ -58,20 +64,36 @@ public class RelationPathBean implements Serializable {
 		this.uid = uid;
 	}
 
-	public String getX() {
-		return x;
+	public String getXstart() {
+		return xstart;
 	}
 
-	public void setX(String x) {
-		this.x = x;
+	public void setXstart(String xstart) {
+		this.xstart = xstart;
 	}
 
-	public String getY() {
-		return y;
+	public String getYstart() {
+		return ystart;
 	}
 
-	public void setY(String y) {
-		this.y = y;
+	public void setYstart(String ystart) {
+		this.ystart = ystart;
+	}
+
+	public String getXend() {
+		return xend;
+	}
+
+	public void setXend(String xend) {
+		this.xend = xend;
+	}
+
+	public String getYend() {
+		return yend;
+	}
+
+	public void setYend(String yend) {
+		this.yend = yend;
 	}
 
 	public String getName() {

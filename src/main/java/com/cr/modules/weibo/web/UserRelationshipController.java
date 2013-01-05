@@ -12,6 +12,8 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sf.json.JSONArray;
+
 import org.springframework.web.servlet.ModelAndView;
 
 
@@ -175,9 +177,23 @@ public class UserRelationshipController extends BaseController {
 			}
 		}
 		
-		return new ModelAndView();
+		response.getWriter().print("s");
+		return null;
 	}
 	
+	public ModelAndView ajaxTest(HttpServletRequest request,
+			HttpServletResponse response) throws Exception { 
+		List<RelationPathBean> lists = new ArrayList<RelationPathBean>();
+		lists.add(new RelationPathBean("Auid", "1uid", "1", "1", "100", "200", "曹rong"));
+		lists.add(new RelationPathBean("Auid", "2uid", "100", "200", "200", "250", "曹rong2"));
+		JSONArray jsonArray = JSONArray.fromObject(lists);
+		response.setCharacterEncoding("utf-8");        
+	    response.setContentType("text/html; charset=utf-8");  
+		response.getWriter().print(jsonArray);
+		return null;
+	}
+	
+
 	
 	/**
 	 * 将User转换并插入db
