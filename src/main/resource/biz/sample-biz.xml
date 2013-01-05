@@ -7,4 +7,10 @@
 	<!-- sample service样例  -->
 	<bean id="sampleService" class="com.cr.modules.sample.service.impl.SampleServiceImpl"/>
 
+
+	<bean id="userService" class="com.cr.modules.weibo.service.impl.UserServiceImpl"/>
+	<!--
+	<bean id="statusService" class="com.cr.modules.weibo.service.impl.StatusServiceImpl"/>
+	<bean id="reStatusService" class="com.cr.modules.weibo.service.impl.ReStatusServiceImpl"/>
+ 	-->
 </beans>

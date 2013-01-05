@@ -29,6 +29,8 @@ import org.apache.commons.httpclient.params.HttpClientParams;
 import org.apache.commons.httpclient.params.HttpConnectionManagerParams;
 import org.apache.commons.httpclient.params.HttpMethodParams;
 import org.apache.commons.httpclient.protocol.Protocol;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 //import org.apache.log4j.Logger;
 
 import com.wb.wb.weibo4j.model.Configuration;
@@ -127,6 +129,7 @@ public class HttpClient implements java.io.Serializable {
 
 	private final static boolean DEBUG = Configuration.getDebug();
 //	static Logger log = Logger.getLogger(HttpClient.class.getName());
+	static Logger log = LoggerFactory.getLogger(HttpClient.class.getClass());
 	org.apache.commons.httpclient.HttpClient client = null;
 
 	private MultiThreadedHttpConnectionManager connectionManager;
@@ -173,7 +176,8 @@ public class HttpClient implements java.io.Serializable {
 	 */
 	private static void log(String message) {
 		if (DEBUG) {
-//			log.debug(message);
+			log.debug(message);
+			
 		}
 	}
 

@@ -10,7 +10,8 @@
 		<property name="sampleService" ref="sampleService"/>
 	</bean>
     
-    
-    
+    <bean id="userRelationshipController" class="com.cr.modules.weibo.web.UserRelationshipController" parent="baseController">
+    	<property name="userService" ref="userService"/>
+    </bean>
     
 </beans>

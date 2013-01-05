@@ -40,6 +40,8 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 //import org.apache.log4j.Logger;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
@@ -59,7 +61,7 @@ import com.wb.wb.weibo4j.org.json.JSONObject;
 public class Response {
     private final static boolean DEBUG = Configuration.getDebug();
 //    static Logger log = Logger.getLogger(Response.class.getName());
-
+    static Logger log = LoggerFactory.getLogger(Response.class.getClass());
 
     private static ThreadLocal<DocumentBuilder> builders =
             new ThreadLocal<DocumentBuilder>() {
@@ -265,7 +267,7 @@ public class Response {
     
     private void log(String message) {
         if (DEBUG) {
-//        	log.debug("[" + new java.util.Date() + "]" + message);
+        	log.debug("[" + new java.util.Date() + "]" + message);
         }
     }
 
