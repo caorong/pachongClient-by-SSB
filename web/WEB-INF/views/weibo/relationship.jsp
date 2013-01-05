@@ -13,7 +13,7 @@
 </head>
 <body>
 
-<!--	<div class="container">-->
+<!--	<div class="container"> -->
 	<!--  
 		<form class="form-horizontal">
 			<div class="control-group">
@@ -29,31 +29,52 @@
 			</div>
 		</form>
 	-->
-	
-	<canvas id="centerCanvas">
-	
-	</canvas>
-		
-		
-	<input type="button" name="123" onclick="draw8();"/>
-	<script type="text/javascript">
+		<input type="button" name="123" onclick="getData();" />
+		<input type="hidden" id="paths" value=""/>
+		<canvas id="centerCanvas" width="1277" height="654" >
+			
+		</canvas>
 
-		function draw8() {
+
+		
+	
+	<script type="text/javascript">
+		function getData() {
+			var request = $.ajax({
+				type : "POST",
+				url : '/weiboCSSB/weibo/relation.html?opt=ajaxTest',
+				dataType: "JSON",
+				success : function(data) {
+					alert(data);
+					$.each(data,function(n,v){
+						$.each(v,function(n,v){
+							console.log(n+":"+v.);
+						});
+					});
+					
+					alert('Load was performed.');
+				}
+			});
+		}
+		
+		function draw() {
 			var canvas = document.getElementById("centerCanvas");
-            if (canvas == null)
-                return false;
-            var context = canvas.getContext("2d");
-            //context.beginPath();
-            context.strokeStyle = "rgb(250,0,0)";
-            context.fillStyle = "rgb(250,0,0)"
-            //实验证明第一次lineTo的时候和moveTo功能一样
-            context.lineTo(100, 100);
-            //之后的lineTo会以上次lineTo的节点为开始
-            context.lineTo(200, 300);
-            context.lineTo(200, 100);
-            context.moveTo(200, 50);
-            context.lineTo(100,50);
-            context.stroke();
+			if (canvas == null)
+				return false;
+			var context = canvas.getContext("2d");
+			//context.beginPath();
+			//背景涂黑
+			context.fillStyle = "rgb(0,0,0)";
+			context.fillRect(0, 0, 1277, 654);
+
+			context.strokeStyle = "rgb(250,250,250)";
+			//       context.fillStyle = "rgb(150,0,0)";
+			//实验证明第一次lineTo的时候和moveTo功能一样
+			context.lineTo(1, 1);
+			//之后的lineTo会以上次lineTo的节点为开始
+			context.lineTo(1211, 600);
+			context.lineWidth = 1;
+			context.stroke();
 		}
 	</script>
 </body>
