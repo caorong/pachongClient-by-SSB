@@ -23,9 +23,12 @@ public class RelationPathBean implements Serializable {
 	private String xend;
 	private String yend;
 	private String name;
+	// 圆的半径(not need)
+	private String noder;
+	// 深度，根据深度决定颜色
+	private String deep;
 
 	public RelationPathBean() {
-		// TODO Auto-generated constructor stub
 	}
 
 	/**
@@ -36,9 +39,11 @@ public class RelationPathBean implements Serializable {
 	 * @param xe
 	 * @param ye
 	 * @param name
+	 * @param noder
+	 * @param deep
 	 * */
 	public RelationPathBean(String centeruid, String uid, String x, String y,
-			String ex, String ey, String name) {
+			String ex, String ey, String name, String noder, String deep) {
 		this.Centeruid = centeruid;
 		this.uid = uid;
 		this.xstart = x;
@@ -46,6 +51,25 @@ public class RelationPathBean implements Serializable {
 		this.xend = ex;
 		this.yend = ey;
 		this.name = name;
+		this.noder = noder;
+		this.deep = deep;
+
+	}
+
+	public String getNoder() {
+		return noder;
+	}
+
+	public void setNoder(String noder) {
+		this.noder = noder;
+	}
+
+	public String getDeep() {
+		return deep;
+	}
+
+	public void setDeep(String deep) {
+		this.deep = deep;
 	}
 
 	public String getCenteruid() {

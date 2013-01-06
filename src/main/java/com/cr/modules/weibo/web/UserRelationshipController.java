@@ -64,6 +64,8 @@ public class UserRelationshipController extends BaseController {
 	 */
 	public ModelAndView userRelatPrint(HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
+		
+		/*
 		//进行oauth认证
 		Oauth oauth = new Oauth();
 		String code = null;
@@ -112,24 +114,41 @@ public class UserRelationshipController extends BaseController {
 		List<User> lv1Users = userWapper.getUsers();
 
 		//canvas 属性初始化
-		List<RelationPathBean> relationPathBeans = new ArrayList<RelationPathBean>();
+		List<RelationPathBean> relationlists = new ArrayList<RelationPathBean>();
 		
+		// lv1层坐标 start
+		int xlv1s = 660;
+		int ylv1s = 300;
+		// end
+		int xlv1e = 660;
+		int ylv1e = 300;
+		// lv2层坐标
+		int xlv2s;
+		int ylv2s;
+		//end
+		int xlv2e;
+		int ylv2e;
+		
+		//半径 lv1&lv2 
+		int rlv1 = 200;
+		int rlv2 = 80;
+		*/
 		//中心点
 		/**
 		 * $(window).width();     1366.
 		 * $(window).height();    600
 		 * */
+		/*
+//		xlv1e = xlv1s + rlv1
 		RelationPathBean relationPathBean = new RelationPathBean(printedUid,
-				printedUid, 660 + "", 300 + "", "曹融");
-		relationPathBeans.add(relationPathBean);
-		
-		// lv1层坐标
-		int xlv1 = 660;
-		int ylv1 = 300;
-		// lv2层坐标
-		int xlv2;
-		int ylv2;
-
+				printedUid, 660 + "", 300 + "",660 + "", 300 + "", "曹融","10","0");
+		relationlists.add(relationPathBean);
+		//lv1 lv2  的个数  TODO: 可以根据length的大小来确定deep的大小 改变前台的圆大小
+		int lengthlv1 = lv1Users.size();
+		int lengthlv2;
+		//循环变量
+		int ilv1 = 0;
+		int ilv2 = 0;
 		//开始遍历1层
 		for (User u1 : lv1Users) {
 			//防止待检测的人
@@ -143,13 +162,16 @@ public class UserRelationshipController extends BaseController {
 					this.insertUserToDb(u1);
 				}
 				//计算坐标
+				xlv1s = 660;
+				ylv1s = 300;
+				xlv1e = (int)( xlv1s + rlv1* Math.cos(ilv1*(360/lengthlv1) * (Math.PI / 180)) );
+				ylv1e = (int)( ylv1s + rlv1* Math.sin(ilv1*(360/lengthlv1) * (Math.PI / 180)) );
+				ilv1++;
 				
-				
-				
-				//创建并插入path队列	
+				// 创建并插入path队列
 				RelationPathBean relatlv1 = new RelationPathBean(printedUid,
-						u1.getId(), 660 + "", 300 + "", u1.getName());
-				relationPathBeans.add(relatlv1);
+						u1.getId(), xlv1s + "", ylv1s + "", xlv1e + "", ylv1e + "", lengthlv1 + "", u1.getName(), "1");
+				relationlists.add(relatlv1);
 				//TODO : 将RelationPathBean插入db 使下次不必再调api直接调db
 				
 				//开始遍历2层
@@ -160,6 +182,8 @@ public class UserRelationshipController extends BaseController {
 					e.printStackTrace();
 				}
 				List<User> lv2Users = userWapper.getUsers();
+				//2层的大小
+				lengthlv2 = lv2Users.size();
 				for(User u2 : lv2Users){
 					//防止 注销
 					if(u2 != null){
@@ -171,12 +195,31 @@ public class UserRelationshipController extends BaseController {
 							//db中不存在，将找到的人存进db
 							this.insertUserToDb(u2);
 						}
+						//第一层的头是第二层的末尾  初始化
+						xlv2s = xlv1e;
+						ylv2s = ylv1e;
+						xlv2e = (int)( xlv2s + rlv2* Math.cos(ilv2*(360/lengthlv2) * (Math.PI / 180)) );
+						ylv2e = (int)( ylv2s + rlv2* Math.sin(ilv2*(360/lengthlv2) * (Math.PI / 180)) );
+						ilv2++;
+						//先检测list里是否已经有uid相同的人
+						for(RelationPathBean retmp : relationlists){
+							if(retmp.getUid().equals(u2.getId())){
+								//修改他们end 让他们指向同一个end点,再插入
+								xlv2e = Integer.parseInt(retmp.getXend());
+								ylv2e = Integer.parseInt(retmp.getYend());
+								break;
+							}
+						}
+						//create and insert
+						RelationPathBean relatlv2 = new RelationPathBean(printedUid, u2.getId(), xlv2s + "", ylv2s + "",
+								xlv2e + "", ylv2e + "", lengthlv2 + "",u2.getName(), "2");
+						relationlists.add(relatlv2);			
 					}
-				}
-				
+				}		
 			}
-		}
-		
+		}*/
+		response.setCharacterEncoding("utf-8");        
+	    response.setContentType("text/html; charset=utf-8");  
 		response.getWriter().print("s");
 		return null;
 	}
@@ -184,8 +227,8 @@ public class UserRelationshipController extends BaseController {
 	public ModelAndView ajaxTest(HttpServletRequest request,
 			HttpServletResponse response) throws Exception { 
 		List<RelationPathBean> lists = new ArrayList<RelationPathBean>();
-		lists.add(new RelationPathBean("Auid", "1uid", "1", "1", "100", "200", "曹rong"));
-		lists.add(new RelationPathBean("Auid", "2uid", "100", "200", "200", "250", "曹rong2"));
+		lists.add(new RelationPathBean("Auid", "1uid", "1", "1", "100", "200", "曹rong","1"));
+		lists.add(new RelationPathBean("Auid", "2uid", "100", "200", "200", "250", "曹rong2","2"));
 		JSONArray jsonArray = JSONArray.fromObject(lists);
 		response.setCharacterEncoding("utf-8");        
 	    response.setContentType("text/html; charset=utf-8");  
