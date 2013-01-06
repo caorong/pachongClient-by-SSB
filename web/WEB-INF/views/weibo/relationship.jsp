@@ -94,12 +94,19 @@
 							
 						});
 						//如果centeruid==uid 将这个对象的name画在中心偏下不做任何事情
-						if(deep == "0"){
+						if(deep == "0" /*|| uid == centeruid*/){
+							//自己的颜色为红色
+					//		context.strokeStyle = "#DC143C";
+					//		context.fillStyle = "#DC143C";
+					//		context.beginPath();
+					//		context.arc(xstart, ystart, 20, 0, Math.PI * 2, true);
+					//		context.closePath();
 							//仅仅写名字
 							context.fillStyle = "#D3D3D3";
+							context.strokeStyle = "#D3D3D3";
 							context.font = "normal 14px Serif";
 							context.textBaseline = 'top';
-							context.fillText(name, xend + 18, yend);
+							//context.fillText(name, xstart + 13, ystart);
 						} else {
 							//画线颜色
 							//console.log(xend,xstart);
@@ -119,17 +126,16 @@
 
 							//画默认圆
 							context.beginPath();
-							context.arc(xstart, ystart, 10 * noder, 0,
-									Math.PI * 2, true);
+							context.arc(xstart, ystart, 1 * parseInt(noder), 0, Math.PI * 2, true);
 							context.arc(xend, yend, 10, 0, Math.PI * 2, true);
 							context.closePath();
 							context.fill();
 
 							//写字  颜色固定为白
 							context.fillStyle = "#D3D3D3";
-							context.font = "normal 14px Serif";
+							context.font = "normal 10px Serif";
 							context.textBaseline = 'top';
-							context.fillText(name, xend + 18, yend);
+							context.fillText(name, xend + 13, yend);
 						}
 					});
 					alert('Load was performed.');

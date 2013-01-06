@@ -13,6 +13,7 @@
     <!-- 用户关系样例控制器 -->
     <bean id="userRelationshipController" class="com.cr.modules.weibo.web.UserRelationshipController" parent="baseController">
     	<property name="userService" ref="userService"/>
+    	<property name="relationPathService" ref="relationPathService"></property>
     </bean>
 
 
