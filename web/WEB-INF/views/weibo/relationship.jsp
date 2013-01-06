@@ -30,7 +30,7 @@
 		</form>
 	-->
 		<input type="button" name="123" onclick="getData();" />
-		<canvas id="centerCanvas" width="1277" height="630" >
+		<canvas id="centerCanvas" width="1277" height="890" >
 			
 		</canvas>
 
@@ -53,7 +53,9 @@
 					var context = canvas.getContext("2d");
 					//背景涂黑
 					context.fillStyle = "#292929";
-					context.fillRect(0, 0, 1277, 654);
+					context.beginPath();
+					context.fillRect(0, 0, 1277, 1390);
+					context.closePath();
 					
 					$.each(data, function(n, v) {
 						var centeruid;
@@ -96,29 +98,32 @@
 						//如果centeruid==uid 将这个对象的name画在中心偏下不做任何事情
 						if(deep == "0" /*|| uid == centeruid*/){
 							//自己的颜色为红色
-					//		context.strokeStyle = "#DC143C";
-					//		context.fillStyle = "#DC143C";
-					//		context.beginPath();
-					//		context.arc(xstart, ystart, 20, 0, Math.PI * 2, true);
-					//		context.closePath();
+							context.strokeStyle = "#DC143C";
+							context.fillStyle = "#DC143C";
+							context.beginPath();
+							context.arc(xstart, ystart, 10, 0, Math.PI * 2, true);
+							context.closePath();
+							context.fill();
 							//仅仅写名字
-							context.fillStyle = "#D3D3D3";
+						//	context.fillStyle = "#D3D3D3";
 							context.strokeStyle = "#D3D3D3";
 							context.font = "normal 14px Serif";
-							context.textBaseline = 'top';
+							context.textBaseline = 'middle';
+							context.fillText(name, xend + 20, yend);
+						//	alert("ddsf");
 							//context.fillText(name, xstart + 13, ystart);
-						} else {
+						} else if(uid != centeruid){
 							//画线颜色
 							//console.log(xend,xstart);
 							if (deep == "1") {
 								context.strokeStyle = "#DC143C";
-								context.fillStyle = "#DC143C";
+								context.fillStyle = "#D3D3D3";
 							} else {
 								context.strokeStyle = "#D3D3D3";
 								context.fillStyle = "#D3D3D3";
 							}
 							context.beginPath();
-							context.lineWidth = 1;
+							context.lineWidth = 0.5;
 							context.moveTo(xstart, ystart);
 							context.lineTo(xend, yend);
 							context.closePath();
@@ -126,17 +131,21 @@
 
 							//画默认圆
 							context.beginPath();
-							context.arc(xstart, ystart, 1 * parseInt(noder), 0, Math.PI * 2, true);
-							context.arc(xend, yend, 10, 0, Math.PI * 2, true);
+						//	context.arc(xstart, ystart, 1 * parseInt(noder), 0, Math.PI * 2, true);
+							//写3层 
+							var size = 0;
+							if(deep=="1"){size=2;}else{size=1}
+							context.arc(xend, yend, 2 * parseInt(size), 0, Math.PI * 2, true);
 							context.closePath();
 							context.fill();
 
 							//写字  颜色固定为白
 							context.fillStyle = "#D3D3D3";
-							context.font = "normal 10px Serif";
-							context.textBaseline = 'top';
-							context.fillText(name, xend + 13, yend);
+							context.font = "normal 8px Serif";
+							context.textBaseline = 'middle';
+							context.fillText(name, xend + 6, yend);
 						}
+
 					});
 					alert('Load was performed.');
 				}

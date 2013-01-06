@@ -219,8 +219,8 @@ public class UserRelationshipController extends BaseController {
 				}		
 			}
 		}*/
-		//从db取出数据 BY CenterUid
-		List<RelationPathBean>reList = relationPathService.queryRelationPathsByCenterUid("1057297283");
+		//从db取出数据 BY CenterUid   Lelouchcr:1057297283
+		List<RelationPathBean>reList = relationPathService.queryRelationPathsByCenterUid("2060033304");
 		JSONArray jsonArray = JSONArray.fromObject(reList);
 		
 		response.setCharacterEncoding("utf-8");        
