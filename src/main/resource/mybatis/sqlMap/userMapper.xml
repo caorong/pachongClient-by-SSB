@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<!-- 指定到Dao类 -->    
+<mapper namespace="com.cr.modules.weibo.dao.UserDao">
+
+	<!-- 注id为指定到Dao类中的方法名 -->
+	
+	<!-- 插入记录 -->
+	<insert id="insertUser" parameterType="com.cr.modules.weibo.model.UserBean">
+		<![CDATA[
+			INSERT INTO tbl_user
+								(uid, screenName, name, province, city, 
+								location, description, url, profileImageUrl, userDomain,
+								gender, followersCount, friendsCount, statusesCount, favouritesCount,
+								createdAt, following, verified, verifiedType, allowAllActMsg,
+								allowAllComment, followMe, avatarLarge, biFollowersCount, remark,
+								lang, verifiedReason, weihao, type )  
+			VALUES 
+				(#{uid}, #{screenName}, #{name}, #{province}, #{city}, 
+				#{location}, #{description}, #{url}, #{profileImageUrl}, #{userDomain},
+				#{gender}, #{followersCount}, #{friendsCount}, #{statusesCount}, #{favouritesCount},
+				#{createdAt}, #{following}, #{verified}, #{verifiedType}, #{allowAllActMsg},
+				#{allowAllComment}, #{followMe}, #{avatarLarge}, #{biFollowersCount}, #{remark},
+				#{lang}, #{verifiedReason}, #{weihao}, #{type} )  
+		]]>
+	</insert>
+	
+	<resultMap id="user_model" type="com.cr.modules.weibo.model.UserBean">
+		<id column="uid" property="uid"/>
+		<result column="screenName" property="screenName"/>
+		<result column="name" property="name"/>
+		<result column="province" property="province"/>
+		<result column="city" property="city"/>
+		
+		<result column="location" property="location"/>
+		<result column="description" property="description"/>
+		<result column="url" property="url"/>
+		<result column="profileImageUrl" property="profileImageUrl"/>
+		<result column="userDomain" property="userDomain"/>
+		
+		<result column="gender" property="gender"/>
+		<result column="followersCount" property="followersCount"/>
+		<result column="friendsCount" property="friendsCount"/>
+		<result column="statusesCount" property="statusesCount"/>
+		<result column="favouritesCount" property="favouritesCount"/>
+		
+		<result column="createdAt" property="createdAt"/>
+		<result column="following" property="following"/>
+		<result column="verified" property="verified"/>
+		<result column="verifiedType" property="verifiedType"/>
+		<result column="allowAllActMsg" property="allowAllActMsg"/>
+		
+		<result column="allowAllComment" property="allowAllComment"/>
+		<result column="followMe" property="followMe"/>
+		<result column="avatarLarge" property="avatarLarge"/>
+		<result column="biFollowersCount" property="biFollowersCount"/>
+		<result column="remark" property="remark"/>
+		
+		<result column="lang" property="lang"/>
+		<result column="verifiedReason" property="verifiedReason"/>
+		<result column="weihao" property="weihao"/>
+		<result column="type" property="type"/>
+	</resultMap>
+	
+	<!-- 查询记录是否存在 -->
+	<select id="queryCountByUid" parameterType="string" resultType="int">
+		<![CDATA[
+			SELECT count(*) FROM tbl_user where uid=#{uid}
+		]]>
+	</select>
+	
+	<!-- 查询单条记录By UID -->
+	<select id="querySingleUserByUid" parameterType="string" resultMap="user_model">
+		<![CDATA[
+			SELECT * FROM tbl_user where uid=#{uid}
+		]]>
+	</select>
+	
+</mapper>

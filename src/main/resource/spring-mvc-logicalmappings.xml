@@ -9,7 +9,8 @@
     	<!-- 映射方法名称  全局的-->
     	<property name="logicalMappings">
     		<props>
-    			<prop key="s001">sampleDisplay</prop> 
+    			<prop key="s001">sampleDisplay</prop>
+    			<prop key="r01">userRelationshipDisplay</prop> 
     			<prop key="r1">userRelationshipDisplay</prop>
     			
     		</props>
