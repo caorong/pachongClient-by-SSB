@@ -16,6 +16,7 @@ public class RelationPathBean implements Serializable {
 	private static final long serialVersionUID = -6305918582607920900L;
 
 	// 用于给数据库表示
+	private String id;
 	private String Centeruid;
 	private String uid;
 	private String xstart;
@@ -55,7 +56,15 @@ public class RelationPathBean implements Serializable {
 		this.deep = deep;
 
 	}
+	
+	public String getId() {
+		return id;
+	}
 
+	public void setId(String id) {
+		this.id = id;
+	}
+	
 	public String getNoder() {
 		return noder;
 	}

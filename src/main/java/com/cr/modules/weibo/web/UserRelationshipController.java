@@ -20,6 +20,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.cr.modules.weibo.model.RelationPathBean;
 import com.cr.modules.weibo.model.UserBean;
+import com.cr.modules.weibo.service.RelationPathService;
 import com.cr.modules.weibo.service.UserService;
 import com.cr.support.web.controller.BaseController;
 
@@ -218,9 +219,13 @@ public class UserRelationshipController extends BaseController {
 				}		
 			}
 		}*/
+		//从db取出数据 BY CenterUid
+		List<RelationPathBean>reList = relationPathService.queryRelationPathsByCenterUid("1057297283");
+		JSONArray jsonArray = JSONArray.fromObject(reList);
+		
 		response.setCharacterEncoding("utf-8");        
 	    response.setContentType("text/html; charset=utf-8");  
-		response.getWriter().print("s");
+		response.getWriter().print(jsonArray);
 		return null;
 	}
 	
@@ -303,8 +308,14 @@ public class UserRelationshipController extends BaseController {
 	
 	//注入userService
 	private UserService userService;
+	private RelationPathService relationPathService;
 
 	public void setUserService(UserService userService) {
 		this.userService = userService;
 	}
+
+	public void setRelationPathService(RelationPathService relationPathService) {
+		this.relationPathService = relationPathService;
+	}
+	
 }
