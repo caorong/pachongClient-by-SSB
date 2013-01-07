@@ -30,4 +30,6 @@ public interface UserDao {
 	 */	
 	public UserBean querySingleUserByUid(String uid);
 	
+	public UserBean querySingleUserByName(String name);
+	
 }

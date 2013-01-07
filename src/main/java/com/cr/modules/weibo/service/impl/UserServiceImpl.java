@@ -13,30 +13,34 @@ import com.cr.modules.weibo.model.UserBean;
 import com.cr.modules.weibo.service.UserService;
 
 /**
- * @Description	
+ * @Description
  * @author caorong
  * @date 2013-1-5
  * 
  */
-@Transactional(readOnly=true)
+@Transactional(readOnly = true)
 public class UserServiceImpl implements UserService {
 
 	// 此处使用注解事务来保证事务的ACID
 	// MyBatis的事务通过默认传播级别会加入spring的事务并受到spring容器的管理
-	@Transactional(readOnly=false)
+	@Transactional(readOnly = false)
 	@Override
 	public int insertUser(UserBean user) {
 		userDao.insertUser(user);
 		return 0;
 	}
 
- 
 	@Override
 	public int queryCountByUid(String uid) {
 		userDao.queryCountByUid(uid);
 		return 0;
 	}
- 
+
+	@Override
+	public UserBean querySingleUserByName(String name) {
+		return userDao.querySingleUserByName(name);
+	}
+
 	@Override
 	public UserBean querySingleUserByUid(String uid) {
 		return userDao.querySingleUserByUid(uid);
@@ -45,7 +49,7 @@ public class UserServiceImpl implements UserService {
 	// 数据访问
 	@Autowired
 	private UserDao userDao;
-	
+
 	private transient Logger log = LoggerFactory.getLogger(this.getClass());
-		
+
 }

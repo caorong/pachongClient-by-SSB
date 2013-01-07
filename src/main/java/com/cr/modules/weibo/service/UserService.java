@@ -32,4 +32,5 @@ public interface UserService {
 	 */	
 	public UserBean querySingleUserByUid(String uid);
 	
+	public UserBean querySingleUserByName(String name);
 }

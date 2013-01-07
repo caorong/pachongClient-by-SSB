@@ -1,19 +1,20 @@
-package com.cr.modules.weibo.dao;
+/**
+ * 
+ */
+package com.cr.modules.weibo.service;
 
 import java.util.HashMap;
 import java.util.List;
 
 import com.cr.modules.weibo.model.ReStatusBean;
-import com.cr.support.repository.mybatis._annotation.MyBatisRepository;
 
 /**
- * @description 转载dao
+ * @Description
  * @author caorong
- * @date 2013-1-2
+ * @date 2013-1-7
+ * 
  */
-@MyBatisRepository
-public interface ReStatusDao {
-
+public interface ReStatusService {
 	/**
 	 * @Description 添加reStatus
 	 * @param reStatusBean
@@ -21,7 +22,7 @@ public interface ReStatusDao {
 	 * @author caorong
 	 */
 	public void insertReStatus(ReStatusBean reStatusBean);
-	
+
 	/**
 	 * @Description 检验是否存在reStatus
 	 * @param reStatusBean
@@ -29,7 +30,7 @@ public interface ReStatusDao {
 	 * @author caorong
 	 */
 	public int queryReStatusByBean(ReStatusBean reStatusBean);
-	
+
 	/**
 	 * @Description 取出满足相关条件的所有reStatus
 	 * @param reStatusBean
@@ -37,5 +38,4 @@ public interface ReStatusDao {
 	 * @author caorong
 	 */
 	public List<ReStatusBean> queryReStatusBeansByMap(HashMap<String, Object> map);
-	
 }

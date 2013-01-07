@@ -1,13 +1,20 @@
-package com.cr.modules.weibo.dao;
+/**
+ * 
+ */
+package com.cr.modules.weibo.service;
 
 import java.util.HashMap;
 import java.util.List;
 
 import com.cr.modules.weibo.model.StatusBean;
-import com.cr.support.repository.mybatis._annotation.MyBatisRepository;
 
-@MyBatisRepository
-public interface StatusDao {
+/**
+ * @Description	
+ * @author caorong
+ * @date 2013-1-7
+ * 
+ */
+public interface StatusService {
 	/**
 	 * @Description 添加status
 	 * @param statusBean
@@ -39,5 +46,4 @@ public interface StatusDao {
 	 * @author caorong
 	 */
 	List<StatusBean> queryStatuslistsByMap(HashMap<String, Object> map);
-	
 }

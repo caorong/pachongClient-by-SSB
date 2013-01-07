@@ -24,15 +24,6 @@ import com.cr.modules.weibo.service.RelationPathService;
 import com.cr.modules.weibo.service.UserService;
 import com.cr.support.web.controller.BaseController;
 
-import com.wb.wb.weibo4j.Friendships;
-import com.wb.wb.weibo4j.Oauth;
-import com.wb.wb.weibo4j.http.AccessToken;
-import com.wb.wb.weibo4j.model.Paging;
-import com.wb.wb.weibo4j.model.User;
-import com.wb.wb.weibo4j.model.UserWapper;
-import com.wb.wb.weibo4j.model.WeiboException;
-import com.wb.wb.weibo4j.util.BareBonesBrowserLaunch;
-
 
 /**
  * @Description	
@@ -219,8 +210,11 @@ public class UserRelationshipController extends BaseController {
 				}		
 			}
 		}*/
-		//从db取出数据 BY CenterUid   Lelouchcr:1057297283
-		List<RelationPathBean>reList = relationPathService.queryRelationPathsByCenterUid("2060033304");
+		//从前台获取数据
+		String str1 = this.findStringParameterValue(request, "push");
+		System.out.println("-----------------"+str1);
+		//从db取出数据 BY CenterUid   Lelouchcr:1057297283  sm 2060033304  szj 1880901514
+		List<RelationPathBean>reList = relationPathService.queryRelationPathsByCenterUid(str1);
 		JSONArray jsonArray = JSONArray.fromObject(reList);
 		
 		response.setCharacterEncoding("utf-8");        
@@ -246,7 +240,7 @@ public class UserRelationshipController extends BaseController {
 	/**
 	 * 将User转换并插入db
 	 * */
-	public void insertUserToDb(User u){
+/*	public void insertUserToDb(User u){
 		UserBean userBean = new UserBean();
 		
 		userBean.setUid(u.getId());
@@ -305,7 +299,7 @@ public class UserRelationshipController extends BaseController {
 		
 		userService.insertUser(userBean);
 	}
-	
+*/	
 	//注入userService
 	private UserService userService;
 	private RelationPathService relationPathService;

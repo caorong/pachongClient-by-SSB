@@ -35,7 +35,7 @@ public interface RelationPathDao {
 	public int queryRelationPathBeanByBean(RelationPathBean relationPathBean);
 	
 	/**
-	 * @Description 查询重复path
+	 * @Description 取相关RelationPathBeanByCenterUid
 	 * @param relationPathBean
 	 * @return
 	 * @author caorong
