@@ -26,8 +26,8 @@
 					<input id="quickSearchName" name="iqnPostData" type="text" class="span12" style="margin: 0 auto;"
 						data-provide="typeahead" data-items="4"
 						data-source='["周鸿祎","王石","Arizona","Arkansas","California","West Virginia"]'>
-					<br> <input name="opt" type="hidden" value="quickSearchByName" /> 
-					<input name="hidUid" value="${model.uid}" type="hidden" />
+					<br> <input id="iopt" name="opt" type="hidden" value="quickSearchByName" /> 
+					<input id="hidUid" name="hidUid" value="${modeluid}" type="hidden" />
 					<input id="hidcurrentPage" name="hidcurrentPage" value="${hidcurrentPage}"  type="hidden" />
 					<br> <input class="btn btn-primary" type="button" value="确认" onclick="quickSearch();"/>
 					<br> <br>
@@ -49,14 +49,14 @@
 
 			</div>
 			<div class="span10">
-				<!--Body content-->
+				<!--Body content
 				<div class="tabbable tabs-left">
 					<ul class="nav nav-tabs">
 						<li><a href="#1" data-toggle="tab" onclick="">A君</a></li>
 						<li><a href="#2" data-toggle="tab">B君</a></li>
 						<li><a href="#3" data-toggle="tab">C君</a></li>
 					</ul>
-					<div class="tab-content">
+					<div class="tab-content">-->
 						<div class="tab-pane" id="1">
 							<ul class="pager">
 								<li><a
@@ -78,6 +78,7 @@
 							</table>
 
 						</div>
+						<!--
 						<div class="tab-pane" id="2">
 							<p>这里是B的.</p>
 						</div>
@@ -85,7 +86,7 @@
 							<p>这里是C的.</p>
 						</div>
 					</div>
-				</div>
+				</div>-->
 				<div id="myModal" class="modal hide fade">
 					
 				</div>
@@ -100,6 +101,7 @@
 				alert("请先输入");
 				return;
 			}
+			document.getElementById("iopt").value= "quickSearchByName";
 			document.getElementById("formQS").submit();
 	//		search = {search:search};
 	//		$.ajax({
@@ -113,6 +115,9 @@
 		}
 		
 		function queryByPage(flag){
+			alert($("#hidUid").val());
+			if($("#hidUid").val()=="") 
+				return;
 			var cpage = parseInt($("#hidcurrentPage").val());
 			if(flag==1){
 				//前一页
@@ -124,7 +129,9 @@
 			}else if(flag==2){
 				cpage++;
 			}
+			//document.getElementById("hidUid").value = ;
 			document.getElementById("hidcurrentPage").value = cpage;
+			document.getElementById("iopt").value= "getStatusByPage";
 			document.getElementById("formQS").submit();
 		}
 	</script>

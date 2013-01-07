@@ -47,7 +47,8 @@ public class WeiboController extends BaseController {
 		List<StatusBean> modelList = statusService.queryStatuslistsByMap(map);
 		
 		return createMAV("weibo/weibo").addObject("modelList", modelList)
-										.addObject("hidcurrentPage", 1);
+										.addObject("hidcurrentPage", 1)
+										.addObject("modeluid",modelList.get(0).getUid());
 	}
 	
 	public ModelAndView getStatusByPage(HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -64,6 +65,7 @@ public class WeiboController extends BaseController {
 		map.put("offset", 10);
 		List<StatusBean> modelList = statusService.queryStatuslistsByMap(map);
 		return createMAV("weibo/weibo").addObject("modelList", modelList)
+				.addObject("modeluid",modelList.get(0).getUid())
 				.addObject("hidcurrentPage", page+1);
 	}
 	
