@@ -12,7 +12,7 @@
     			<prop key="s001">sampleDisplay</prop>
     			<prop key="r01">userRelationshipDisplay</prop> 
     			<prop key="r1">userRelationshipDisplay</prop>
-    			
+    			<prop key="r2">weiboDisplay</prop>
     		</props>
     	</property>
     </bean>

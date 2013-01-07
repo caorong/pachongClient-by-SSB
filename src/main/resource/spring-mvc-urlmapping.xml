@@ -11,8 +11,8 @@
 		<property name="mappings">
 			<props>
 				<prop key="/sample/default.html">defaultSampleController</prop>
-				
 				<prop key="/weibo/relation.html">userRelationshipController</prop>
+				<prop key="/weibo/weibo.html">weiboController</prop>
 			</props>
 		</property>
 	</bean>

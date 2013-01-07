@@ -77,4 +77,11 @@
 		]]>
 	</select>
 	
+	<!-- 查询单条记录By Name -->
+	<select id="querySingleUserByName" parameterType="string" resultMap="user_model">
+		<![CDATA[
+			SELECT * FROM tbl_user where name=#{name}
+		]]>
+	</select>
+	
 </mapper>

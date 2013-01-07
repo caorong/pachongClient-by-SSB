@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<!-- 指定到Dao类 -->    
+<mapper namespace="com.cr.modules.weibo.dao.StatusDao">
+
+	<!-- 注id为指定到Dao类中的方法名 -->
+	
+	<!-- 插入记录 -->
+	<insert id="insertStatus" parameterType="com.cr.modules.weibo.model.StatusBean">
+		<![CDATA[
+			INSERT INTO tbl_status
+								(wid, uid, createdAt, text, url, 
+								relationShip, name, favorited, truncated, thumbnailPic,
+								bmiddlePic, originalPic, geo, latitude, longitude,
+								repostsCount, commentsCount, attitudescount, repostsFlag, commentsFlag,
+								commentGoodCount, commentBadCount ) 
+			VALUES 
+				(#{wid}, #{uid}, #{createdAt}, #{text}, #{url}, 
+				#{relationShip}, #{name}, #{favorited}, #{truncated}, #{thumbnailPic},
+				#{bmiddlePic}, #{originalPic}, #{geo}, #{latitude}, #{longitude},
+				#{repostsCount}, #{commentsCount}, #{attitudescount}, #{repostsFlag}, #{commentsFlag},
+				#{commentGoodCount}, #{commentBadCount} ) 
+		]]>
+	</insert>
+	
+	<!-- 查询记录是否存在 -->
+	<select id="queryCountByWid" parameterType="string" resultType="int">
+		<![CDATA[
+			SELECT count(*) FROM tbl_status where wid=#{wid}
+		]]>
+	</select>
+	
+	<resultMap type="com.cr.modules.weibo.model.StatusBean" id="stat_model">
+		<id column="wid" property="wid"/>
+		<result column="uid" property="uid"/>
+		<result column="createdAt" property="createdAt"/>
+		<result column="text" property="text"/>
+		<result column="url" property="url"/>
+		
+		<result column="relationShip" property="relationShip"/>
+		<result column="name" property="name"/>
+		<result column="favorited" property="favorited"/>
+		<result column="truncated" property="truncated"/>
+		<result column="thumbnailPic" property="thumbnailPic"/>
+		
+		<result column="bmiddlePic" property="bmiddlePic"/>
+		<result column="originalPic" property="originalPic"/>
+		<result column="geo" property="geo"/>
+		<result column="latitude" property="latitude"/>
+		<result column="longitude" property="longitude"/>
+		
+		<result column="repostsCount" property="repostsCount"/>
+		<result column="commentsCount" property="commentsCount"/>
+		<result column="attitudescount" property="attitudescount"/>
+		<result column="repostsFlag" property="repostsFlag"/>
+		<result column="commentGoodCount" property="commentGoodCount"/>
+		
+		<result column="commentBadCount" property="commentBadCount"/>
+		<result column="commentsFlag" property="commentsFlag"/>
+	</resultMap>
+	
+	<select id="queryStatuslistsByMap" resultMap="stat_model" parameterType="hashmap">
+		<![CDATA[
+			SELECT * FROM tbl_status WHERE uid=#{uid}
+			
+			ORDER BY createdAt DESC limit #{start},#{offset}
+			]]>
+	</select>
+	
+</mapper>

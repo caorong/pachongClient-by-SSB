@@ -15,7 +15,11 @@
     	<property name="userService" ref="userService"/>
     	<property name="relationPathService" ref="relationPathService"></property>
     </bean>
-
-
+    
+	<!-- 微博控制器 -->
+	<bean id="weiboController" class="com.cr.modules.weibo.web.WeiboController" parent="baseController">
+		<property name="userService" ref="userService"/>
+		<property name="statusService" ref="statusService"/>
+	</bean>
     
 </beans>
