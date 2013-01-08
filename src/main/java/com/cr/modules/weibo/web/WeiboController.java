@@ -193,6 +193,7 @@ public class WeiboController extends BaseController {
 		//如果查出来为空则说明没有
 		if(!relistslv1.isEmpty()){
 			for(ReStatusBean r1 : relistslv1){
+				int flag1 = 0;
 				//先将r1的位置bean放进返回的list
 				//初始化第二层的属性
 				map.clear();
@@ -202,14 +203,25 @@ public class WeiboController extends BaseController {
 					map.put("authorfansflag", "1");
 				}
 				map.put("wid", wid);
-				map.put("fatherwid", r1.getWid());
-			//	map.put("deepth", "2");
+				map.put("fatherwid", r1.getSelfwid());
+				map.put("deepth", "2");
 				//遍历第二层
 				List<ReStatusBean>relistslv2 = reStatusService.queryReStatusBeansByMap(map);
 				if(!relistslv2.isEmpty()){
 					//取出userid相应的name
 					UserBean u1 = userService.querySingleUserByUid(r1.getSelfuid());
 					//进入第二层说明第二层非空 则可以插入 再遍历
+					//检测 list里是否已经有这个id的数据
+					for (ReStatDeepPosBean r : reStatBeanslists) {
+						if(r.getId().equals(r1.getSelfwid()))
+							flag1 = 1;
+					}
+					//不进行此次add
+					if(flag1 == 1){
+						//还原
+						flag1 = 0;
+						continue;
+					}
 					//这里是因为测试时数据不一致，因为之前抓的时候没  "物尽其用"
 					if (u1 == null) {
 						reStatBeanslists.add(new ReStatDeepPosBean(r1.getSelfwid(),"未抓取", 1+"", r1.getFatherwid()));
@@ -218,6 +230,7 @@ public class WeiboController extends BaseController {
 					}
 					//第二层存在的话
 					for(ReStatusBean r2 : relistslv2){
+						int flag2 = 0;
 						//初始化第三层的属性
 						map.clear();
 						if(authorfansflag.equals("0")){
@@ -226,12 +239,23 @@ public class WeiboController extends BaseController {
 							map.put("authorfansflag", "1");
 						}
 						map.put("wid", wid);
-						map.put("fatherwid", r2.getWid());
-				//		map.put("deepth", "3");
+						map.put("fatherwid", r2.getSelfwid());
+						map.put("deepth", "3");
 						//遍历第三层
 						List<ReStatusBean>relistslv3 = reStatusService.queryReStatusBeansByMap(map);
 						if(!relistslv3.isEmpty()){
 							UserBean u2 = userService.querySingleUserByUid(r2.getSelfuid());
+							//检测 list里是否已经有这个id的数据
+							for (ReStatDeepPosBean r : reStatBeanslists) {
+								if(r.getId().equals(r2.getSelfwid()))
+									flag2 = 1;
+							}
+							//不进行此次add
+							if(flag2 == 1){
+								//还原
+								flag2 = 0;
+								continue;
+							}
 							//这里是因为测试时数据不一致，因为之前抓的时候没  "物尽其用"
 							if (u2 == null) {
 								reStatBeanslists.add(new ReStatDeepPosBean(r2.getSelfwid(), "未抓取", 3+"", r2.getFatherwid()));
@@ -240,7 +264,19 @@ public class WeiboController extends BaseController {
 							}
 							//第三层存在的话
 							for(ReStatusBean r3 : relistslv3){
+								int flag3 = 0;
 								UserBean u3 = userService.querySingleUserByUid(r3.getSelfuid());
+								//检测 list里是否已经有这个id的数据
+								for (ReStatDeepPosBean r : reStatBeanslists) {
+									if(r.getId().equals(r3.getSelfwid()))
+										flag3 = 1;
+								}
+								//不进行此次add
+								if(flag3 == 1){
+									//还原
+									flag3 = 0;
+									continue;
+								}
 								//这里是因为测试时数据不一致，因为之前抓的时候没  "物尽其用"
 								if (u3 == null) {
 									reStatBeanslists.add(new ReStatDeepPosBean(r3.getSelfwid(), "未抓取", 7+"", r3.getFatherwid()));

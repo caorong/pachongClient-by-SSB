@@ -27,7 +27,7 @@
 					<form id="formQS" action="weibo.html" method="post">
 					<input id="quickSearchName" name="iqnPostData" type="text" class="span12" style="margin: 0 auto;"
 						data-provide="typeahead" data-items="4"
-						data-source='["周鸿祎","王石","Arizona","Arkansas","California","West Virginia"]'>
+						data-source='["周鸿祎","王石","王伟","王晓","王笑","王林","Arizona","Arkansas","California","West Virginia"]'>
 					<br> <input id="iopt" name="opt" type="hidden" value="quickSearchByName" /> 
 					<input id="hidUid" name="hidUid" value="${modeluid}" type="hidden" />
 					<input id="hidcurrentPage" name="hidcurrentPage" value="${hidcurrentPage}"  type="hidden" />
@@ -96,7 +96,7 @@
 			</div>
 		</div>
 	</div>
-	<div id="myModal" class="modal hide" style="position: absolute; left: 300px;top: 20px;width:97%" data-backdrop='false'>
+	<div id="myModal" class="modal hide" style="position: absolute; left: 300px;top: 20px;width:97%;" data-backdrop='false'>
 					<div class="modal-header">
 						<a class="close" data-dismiss="modal">&times;</a>
 						<h3>对话框</h3>
@@ -223,7 +223,7 @@
 		// 只画至少2层的  
 		function getDatalevel(wid,flag) {
 			//	alert(wid+"    "+flag);
-				wid="3481017534962625";
+				wid="3526775705197239";
 				//通过ajax获得评论深度图
 				//强制改变flag为1 增加数量 test--
 				//flag = "1";
