@@ -40,4 +40,12 @@ public interface StatusDao {
 	 */
 	List<StatusBean> queryStatuslistsByMap(HashMap<String, Object> map);
 	
+	/**
+	 * @Description 查询单条记录 
+	 * @param wid
+	 * @return
+	 * @author caorong
+	 */
+	StatusBean querySingleStatusByWid(String wid);
+	
 }

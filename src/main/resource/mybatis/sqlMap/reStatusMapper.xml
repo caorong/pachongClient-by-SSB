@@ -47,15 +47,24 @@
 		]]>
 	</select>
 
-	<select id="" parameterType="hashmap" resultMap="reSt_model">
-		<![CDATA[ 
-			SELECT * FROM tbl_repost 
-			WHERE 
-				authorfansflag=#{authorfansflag}
-			AND	
-				fatherwid=#{fatherwid}
-			 ORDER BY createdAt DESC limit #{start},#{offset}
-		]]>
+	<select id="queryReStatusBeansByMap" parameterType="hashmap" resultMap="reSt_model">
+		<![CDATA[  
+			SELECT * FROM tbl_repost  ]]> 
+			<trim prefix="WHERE" prefixOverrides="AND" >  
+				<if test="authorfansflag!=null">   
+					<![CDATA[ authorfansflag=#{authorfansflag}	]]>
+				</if>  
+				<if test="fatherwid!=null">
+					AND <![CDATA[ fatherwid=#{fatherwid} ]]>
+				</if>
+				<if test="wid!=null">
+					AND <![CDATA[ wid=#{wid} ]]>
+				</if>
+				<if test="deepth!=null">
+					AND <![CDATA[ deepth=#{deepth} ]]>
+				</if>
+			 </trim>  
+		<![CDATA[  	]]>
 	</select>
 
 </mapper>

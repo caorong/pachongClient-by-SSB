@@ -20,6 +20,7 @@
 	<bean id="weiboController" class="com.cr.modules.weibo.web.WeiboController" parent="baseController">
 		<property name="userService" ref="userService"/>
 		<property name="statusService" ref="statusService"/>
+		<property name="reStatusService" ref="reStatusService"/>
 	</bean>
     
 </beans>

@@ -68,4 +68,10 @@
 			]]>
 	</select>
 	
+	<select id="querySingleStatusByWid" resultMap="stat_model" parameterType="string">
+		<![CDATA[
+			SELECT * FROM tbl_status WHERE wid=#{wid}
+		]]>
+	</select>
+	
 </mapper>

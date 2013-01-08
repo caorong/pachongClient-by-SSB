@@ -44,4 +44,9 @@ public class StatusServiceImpl implements StatusService {
 	// 数据访问
 	@Autowired
 	private StatusDao statusDao;
+
+	@Override
+	public StatusBean querySingleStatusByWid(String wid) {
+		return statusDao.querySingleStatusByWid(wid);
+	}
 }
